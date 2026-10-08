@@ -196,6 +196,7 @@ document.querySelectorAll("#install [data-app]").forEach(li => li.hidden = !!CFG
 function sig(useUrl, key){
   return CFG.signature.layout === "grid" ? gridSig(useUrl, key) : stackSig(useUrl, key);
 }
+const unlink = x => esc(x).replace(/[@.]/g, "<span>$&</span>");
 const href = (kind, x) => kind === "tel" ? "tel:" + x.replace(/[^+\d]/g,"") : kind === "mailto" ? "mailto:" + x : x;
 // "grid" layout: logo + name/title on top, then labelled contact rows | divider | website + address.
 // A variant can override signature settings (e.g. another logo); "logo" and "grid" merge one level deep.
@@ -214,11 +215,11 @@ function gridSig(useUrl, key){
 </tr></table>`;
   const rows = g.rows.map(r => {
     const x = (r.field ? val(r.field) : r.value) || (useUrl ? "" : r.sample || ""); if (!x) return "";
-    return `<tr><td width="${g.prefix_width}" style="${T}width:${g.prefix_width}px;font-family:${g.prefix_font || s.font};color:${g.prefix_color};font-weight:${g.prefix_weight || "normal"};padding:0 0 ${g.row_gap}px 0;">${esc(r.prefix)}</td><td style="${T}padding:0 0 ${g.row_gap}px 0;white-space:nowrap;">${s.links === false ? esc(x) : `<a href="${href(r.href, x)}" style="${L}"><span style="${L}">${esc(x)}</span></a>`}</td></tr>`;
+    return `<tr><td width="${g.prefix_width}" style="${T}width:${g.prefix_width}px;font-family:${g.prefix_font || s.font};color:${g.prefix_color};font-weight:${g.prefix_weight || "normal"};padding:0 0 ${g.row_gap}px 0;">${esc(r.prefix)}</td><td style="${T}padding:0 0 ${g.row_gap}px 0;white-space:nowrap;">${s.links === false ? unlink(x) : `<a href="${href(r.href, x)}" style="${L}"><span style="${L}">${esc(x)}</span></a>`}</td></tr>`;
   }).join("");
   // Right items can come from a dropdown field (e.g. office address). Lines never wrap, so an address keeps its own line breaks.
   const right = g.right.map((r, i) => { r = r.field ? {...r, ...opt(r.field)} : r.lines ? {...r, html: lineVals(r, useUrl).map(esc).join("<br>")} : r;
-    return `<div style="white-space:nowrap;${i && r.gap_before ? `padding-top:${r.gap_before}px;` : ""}">${r.url && s.links !== false ? `<a href="${r.url}" target="_blank" style="${L}"><span style="${L}">${r.html || esc(r.label)}</span></a>` : (r.html || esc(r.label))}</div>`; }).join("");
+    return `<div style="white-space:nowrap;${i && r.gap_before ? `padding-top:${r.gap_before}px;` : ""}">${r.url && s.links !== false ? `<a href="${r.url}" target="_blank" style="${L}"><span style="${L}">${r.html || esc(r.label)}</span></a>` : (s.links === false && !r.html ? unlink(r.label) : (r.html || esc(r.label)))}</div>`; }).join("");
   // Two align="left" tables side by side: on a narrow phone the right one drops under the left one instead of squeezing.
   const contact = `<table align="left" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>
 <td valign="top" style="padding:0 ${g.divider_gap}px ${g.wrap_gap ?? 12}px ${g.indent || 0}px;"><table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${rows}</table></td>
@@ -301,4 +302,4 @@ $("copy").addEventListener("click", () => {
 </script>
 
 </html>
-<!-- build 1791463080 -->
+<!-- build 1791463322 -->
