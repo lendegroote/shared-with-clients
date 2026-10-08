@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://use.typekit.net/zui5iyp.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,wght@1,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@1,600&display=swap">
 <style>
 /* Otto-style setup page (Figma "Mail signature setup page", Len's design 8 Oct 2026): Otto nav, grey cards on white,
    step 1 = fields + live mail preview + one copy button (version tabs when there are several), step 2 = install steps, Otto footer.
@@ -39,8 +39,9 @@ h1{font:500 32px/50.4px var(--roc-c);margin:0}
 h2{font:500 24px/24px var(--roc-c);margin:0}
 .fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 8px}
 label{display:flex;flex-direction:column;gap:6px;font:600 12.8px/15px var(--body);color:var(--muted);min-width:0}
-input,select{font:400 16px/20px var(--body);color:var(--ink);background:#fff;border:1px solid var(--card);border-radius:10px;padding:11px 13px;width:100%;box-sizing:border-box}
+input,select{font:300 12px/20px var(--body);color:var(--ink);background:#fff;border:1px solid var(--card);border-radius:10px;padding:11px 13px;width:100%;box-sizing:border-box}
 input::placeholder{color:#8A8D91}
+@media (max-width:640px){input,select{font-size:16px}} /* under 16px iPhone zooms in on focus */
 select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:36px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236F7276' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 13px center}
 input:hover,select:hover{border-color:var(--line)}
 input:focus-visible,select:focus-visible{outline:none;border-color:var(--ink)}
@@ -300,4 +301,4 @@ $("copy").addEventListener("click", () => {
 </script>
 
 </html>
-<!-- build 1791463007 -->
+<!-- build 1791463080 -->
